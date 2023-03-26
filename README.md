@@ -3,6 +3,8 @@
 ## Entity Relational Diagram
 
 
+<img width="1012" alt="domain" src="https://user-images.githubusercontent.com/105637783/227791193-4364e4f3-4666-4b5c-87ea-b1d5b1e416d9.png">
+
 
 
 
