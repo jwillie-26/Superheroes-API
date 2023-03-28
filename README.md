@@ -3,22 +3,189 @@
 ## Entity Relational Diagram
 
 
-<img width="1012" alt="domain" src="https://user-images.githubusercontent.com/105637783/227791193-4364e4f3-4666-4b5c-87ea-b1d5b1e416d9.png">
+![superheroes](https://user-images.githubusercontent.com/105637783/228170494-1c298e4c-b005-4ca2-9837-cae3be4cd934.png)
 
 
 
 
 ### Endpoints
+### Validations
+Add validations to the `HeroPower` model:
 
-| index           |      show            |      create     |
-|-----------------|:--------------------:|----------------:|
-| {{host}}/heroes |  {{host}}/heroes/:id | {{host}}/heroes |
-| {{host}}/powers |  {{host}}/powers/:id | {{host}}/powers |
-| {{host}}/hero-powers |  {{host}}/hero-powers/:id | {{host}}/hero-powers |
+- `strength` must be one of the following values: 'Strong', 'Weak', 'Average'
 
-### Ruby Version
+Add validations to the `Power` model:
 
-2.4.7
+- `description` must be present and at least 20 characters long
+
+### Routes
+Set up the following routes. Make sure to return JSON data in the format
+specified along with the appropriate HTTP verb.
+
+GET /heroes
+Return JSON data in the format below:
+
+[  
+
+{ "id": 1, "name": "Kamala Khan", "super_name": "Ms. Marvel" },  
+
+{ "id": 2, "name": "Doreen Green", "super_name": "Squirrel Girl" },  
+
+{ "id": 3, "name": "Gwen Stacy", "super_name": "Spider-Gwen" }
+
+]
+
+
+GET /heroes/:id
+If the `Hero` exists, return JSON data in the format below:
+
+
+{
+  "id": 1,
+  "name": "Kamala Khan",
+  "super_name": "Ms. Marvel",
+  "powers": [
+    {
+      "id": 1,
+      "name": "super strength",
+      "description": "gives the wielder super-human strengths"
+    },
+    {
+      "id": 2,
+      "name": "flight",
+      "description": "gives the wielder the ability to fly through the skies at supersonic speed"
+    }
+  ]
+}
+
+
+If the `Hero` does not exist, return the following JSON data, along with
+the appropriate HTTP status code:
+
+{   "error": "Hero not found" }
+
+ GET /powers
+Return JSON data in the format below:
+
+
+[
+  {
+    "id": 1,
+    "name": "super strength",
+    "description": "gives the wielder super-human strengths"
+  },
+  {
+    "id": 1,
+    "name": "flight",
+    "description": "gives the wielder the ability to fly through the skies at supersonic speed"
+  }
+]
+
+
+ GET /powers/:id
+If the `Power` exists, return JSON data in the format below:
+
+```
+{
+  "id": 1,
+  "name": "super strength",
+  "description": "gives the wielder super-human strengths"
+}
+```
+
+If the `Power` does not exist, return the following JSON data, along with
+the appropriate HTTP status code:
+
+```
+{
+  "error": "Power not found"
+}
+```
+
+ PATCH /powers/:id
+This route should update an existing `Power`. It should accept an object with
+the following properties in the body of the request:
+
+```
+{
+  "description": "Updated description"
+}
+```
+
+If the `Power` exists and is updated successfully (passes validations), update
+its description and return JSON data in the format below:
+
+```
+{
+  "id": 1,
+  "name": "super strength",
+  "description": "Updated description"
+}
+```
+
+If the `Power` does not exist, return the following JSON data, along with
+the appropriate HTTP status code:
+
+```
+{
+  "error": "Power not found"
+}
+```
+
+If the `Power` is **not** updated successfully (does not pass validations),
+return the following JSON data, along with the appropriate HTTP status code:
+
+```
+{
+  "errors": ["validation errors"]
+}
+```
+
+ POST /hero_powers
+This route should create a new `HeroPower` that is associated with an
+existing `Power` and `Hero`. It should accept an object with the following
+properties in the body of the request:
+
+```
+{
+  "strength": "Average",
+  "power_id": 1,
+  "hero_id": 3
+}
+```
+
+If the `HeroPower` is created successfully, send back a response with the data
+related to the `Hero`:
+
+```
+{
+  "id": 1,
+  "name": "Kamala Khan",
+  "super_name": "Ms. Marvel",
+  "powers": [
+    {
+      "id": 1,
+      "name": "super strength",
+      "description": "gives the wielder super-human strengths"
+    },
+    {
+      "id": 2,
+      "name": "flight",
+      "description": "gives the wielder the ability to fly through the skies at supersonic speed"
+    }
+  ]
+}
+```
+
+If the `HeroPower` is **not** created successfully, return the following
+JSON data, along with the appropriate HTTP status code:
+
+```
+{
+  "errors": ["validation errors"]
+}
+```
+
 
 ### First time set up
 
