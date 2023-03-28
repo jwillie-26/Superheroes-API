@@ -1,42 +1,41 @@
 class PowersController < ApplicationController
-  before_action :set_power, only: %i[ show update  ]
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-
-  # GET /powers
-  def index
-    @powers = Power.all
-
-    render json: @powers
-  end
-
-  # GET /powers/1
-  def show
-    render json: @power
-  end
-
-  # PATCH/PUT /powers/1
-  def update
-    if @power.update(power_params)
-      render json: @power
-    else
-      render json: @power.errors.full_messages, status: :unprocessable_entity
+    # rescue
+rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+ 
+    # get all /powers
+    def index
+        powers = Power.all
+        render json: powers
     end
-  end
+    # get powers/{id}
+    def show
+        power = find_power
+        render json: power
+    end 
 
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_power
-      @power = Power.find(params[:id])
+    # PATCH /powers/{id}
+    def update
+        power = find_power
+        power.update!(power_params)
+        render json: power
     end
 
-    # Only allow a list of trusted parameters through.
-    def power_params
-      params.require(:power).permit(:description)
-    end
-
+    # private
+    private
     def render_not_found_response
-      render json: { error: "Power not found" }, status: :not_found
-  end
-
+        render json: {error:"Power not found"}, status: :not_found
+    end
+    # validation error
+    def render_unprocessable_entity_response
+        render json: {error: "validation errors"}, status: :unprocessable_entity
+    end
+    # find
+    def find_power
+        Power.find(params[:id])
+    end
+    # strong params
+    def power_params
+        params.permit(:name, :description)
+    end
 end

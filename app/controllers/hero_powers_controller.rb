@@ -1,15 +1,20 @@
 class HeroPowersController < ApplicationController
-  rescue_from ActiveRecord::RecordInvalid, with: :render_errors
+    # rescue
+rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-  def create
-      hero_power = HeroPower.create!(hero_power_params)
-      render json: hero_power.hero, status: :created, serializer: HeroPowerSerializer
-  end
-  private
-  def hero_power_params
-      params.permit(:strength, :power_id, :hero_id)
-  end
-  def render_errors(invalid)
-      render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
-  end
+    # CREATE /hero_powers
+    def create
+        hero_powers = HeroPower.create!(hero_powers_params)
+        render json: hero_powers.hero, status: :created, serializer: HeroPowerSerializer
+    end
+
+    # private
+    # strong params
+    def hero_powers_params
+        params.permit(:strength,:power_id,:hero_id)
+    end
+    # validation errors
+    def render_unprocessable_entity_response
+        render json: {error: "validation errors"}, status: :unprocessable_entity
+    end
 end

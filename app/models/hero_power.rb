@@ -1,6 +1,8 @@
 class HeroPower < ApplicationRecord
-  belongs_to :hero
-  belongs_to :power
-  validates :strength, inclusion: { in: %w(Strong Weak Average),
-    message: "%{value} is not a valid strength category.Strength can only be strong, weak and average" }
+    belongs_to :power
+    belongs_to :hero 
+
+    # validations 
+    @allowed_strengths = ['Strong', 'Weak', 'Average']
+    validates :strength, inclusion: @allowed_strengths
 end

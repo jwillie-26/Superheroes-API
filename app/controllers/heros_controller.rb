@@ -1,27 +1,18 @@
 class HerosController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-  before_action :set_hero, only: %i[ show ]
-
-  # GET /heros
-  def index
-    @heros = Hero.all
-
-    render json: @heros
-  end
-
-  # GET /heros/1
-  def show
-    render json: @hero, serializer: HeroPowerSerializer
-  end
-
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_hero
-      @hero = Hero.find(params[:id])
+    # rescue
+rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    def index
+        heroes = Hero.all
+        render json: heroes, status: :ok
+    end
+    def show 
+        hero = Hero.find(params[:id])
+        render json: hero, serializer: HeroPowerSerializer
     end
 
+    # private
+    private
     def render_not_found_response
-      render json: { error: "Hero not found" }, status: :not_found
-  end
+        render json: {error: "Hero not found"}, status: :not_found
+    end
 end
