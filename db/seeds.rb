@@ -1,47 +1,23 @@
-Hero.create([
-  {
-    name: "Barry Allen",
-    super_name: "Flash"
-  },
-  {
-    name: "Melissa Benoist",
-    super_name: "Supergirl"
-  },
-  {
-    name: "Diana",
-    super_name: "Wonder woman"
-  }
-])
+puts "start seeding..."
+HEROES = ["Captain America", "Black Panther", "Groot", "Hawkeye","Black Widow", "The Winter Soldier"]
+POWERS = ["Energy blasts", "martial artist", "speed", "healing", "stamina", "agility"]
+STRENGTH = ['Strong', 'Weak', 'Average']
+# # heroes
+6.times do
+    Hero.create(name: Faker::Internet.username, super_name: HEROES.uniq.sample)
+end
 
-Power.create([
-  {
-    name:"Superspeed",
-    description:" ability to run, move, and think extremely fast, use superhuman reflexes"
-  },
-  {
-    name:"Superhuman strength",
-    description:"Very physically strong"
-  },
-  {
-    name:" Immortality",
-    description:"The amazons age slow"
-  }
-])
+# powers
+6.times do
+   Power.create(name: POWERS.uniq.sample, description: Faker::Lorem.sentence)
+end
 
-HeroPower.create([
-  {
-    strength:"Strong",
-    power_id:1,
-    hero_id:1
-  },
-  {
-    strength:"Weak",
-    power_id:2,
-    hero_id:2
-  },
-  {
-    strength:"Average",
-    power_id:3,
-    hero_id:3
-  }
-])
+# heropowers 
+powers = Power.all
+heroes = Hero.all
+6.times do
+    power = powers.uniq.sample
+    hero = heroes.uniq.sample
+    HeroPower.create(power_id: power.id, hero_id: hero.id, strength: STRENGTH.uniq.sample)
+end
+puts "done seeding."
