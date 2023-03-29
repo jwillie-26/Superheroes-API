@@ -1,15 +1,57 @@
 # Superheroes API
 
-## Entity Relational Diagram
 
 
-![superheroes](https://user-images.githubusercontent.com/105637783/228170494-1c298e4c-b005-4ca2-9837-cae3be4cd934.png)
+## Ruby version
+version: 2.7.4 or newer!
+
+## Requirements
 
 
+Create a Rails API backend. Have at least three resources (three DB tables).
+
+## MODEL Deliverables and Relationships
+Create the following relationships:
+
+- A `Hero` has many `Power`s through `HeroPower`
+- A `Power` has many `Hero`s through `HeroPower`
+- A `HeroPower` belongs to a `Hero` and belongs to a `Power`
+
+![](/assets/superheroes.png)
 
 
-### Endpoints
-### Validations
+## Deployment Link
+This link can be easily used to test the different routes/requests available to the API server. If you want to have the project in your development environment, proceed to set it up as outlined in the section that follows.
+
+```bash
+https://superheroes-api-apvb.onrender.com
+```
+
+## Setup
+In order to use this repository, you need the following:
+* Operating System (Windows 10+, Linux 3.8+, or MacOS X 10.7+)
+* An account on Postman API Platform. CLICK HERE TO CREATE ONE
+* RAM >= 4GB
+* Free Space >= 2GB
+
+1. Fork and clone the repository.
+2. Ensure the ruby gems are setup in your machine
+```
+bundle install
+```
+3. Perform any pending database migrations and seed data
+```
+rails db:migrate db:seed
+```
+4. Make sure no other application is using PORT 3000 and run the application
+```
+rails s
+```
+5. Using your preferred API testing platform (Postman, ThunderClient, etc), proceed to test the various routes available to the API. This will be your base URL:
+```
+http://localhost:3000
+```
+## validations Deliverables
 Add validations to the `HeroPower` model:
 
 - `strength` must be one of the following values: 'Strong', 'Weak', 'Average'
@@ -18,13 +60,17 @@ Add validations to the `Power` model:
 
 - `description` must be present and at least 20 characters long
 
-### Routes
+## Routes
 Set up the following routes. Make sure to return JSON data in the format
-specified along with the appropriate HTTP verb.
+specified along with the appropriate HTTP verb. Also, ensure that errors are returned and handled appropriately. This includes and is not limited to necessary status codes.
 
+```
 GET /heroes
+```
+
 Return JSON data in the format below:
 
+```
 [  
 
 { "id": 1, "name": "Kamala Khan", "super_name": "Ms. Marvel" },  
@@ -34,12 +80,15 @@ Return JSON data in the format below:
 { "id": 3, "name": "Gwen Stacy", "super_name": "Spider-Gwen" }
 
 ]
+```
 
-
+```
 GET /heroes/:id
+```
+
 If the `Hero` exists, return JSON data in the format below:
 
-
+```
 {
   "id": 1,
   "name": "Kamala Khan",
@@ -57,17 +106,23 @@ If the `Hero` exists, return JSON data in the format below:
     }
   ]
 }
+```
 
 
 If the `Hero` does not exist, return the following JSON data, along with
 the appropriate HTTP status code:
 
+```
 {   "error": "Hero not found" }
+```
 
- GET /powers
+```
+GET /powers
+```
+
 Return JSON data in the format below:
 
-
+```
 [
   {
     "id": 1,
@@ -80,9 +135,11 @@ Return JSON data in the format below:
     "description": "gives the wielder the ability to fly through the skies at supersonic speed"
   }
 ]
+```
 
-
+```
  GET /powers/:id
+```
 If the `Power` exists, return JSON data in the format below:
 
 ```
@@ -102,13 +159,15 @@ the appropriate HTTP status code:
 }
 ```
 
- PATCH /powers/:id
+```
+PATCH /powers/:id
+```
 This route should update an existing `Power`. It should accept an object with
 the following properties in the body of the request:
 
 ```
 {
-  "description": "Updated description"
+  "description": "Updated description successfully."
 }
 ```
 
@@ -141,7 +200,9 @@ return the following JSON data, along with the appropriate HTTP status code:
 }
 ```
 
- POST /hero_powers
+```
+POST /hero_powers
+```
 This route should create a new `HeroPower` that is associated with an
 existing `Power` and `Hero`. It should accept an object with the following
 properties in the body of the request:
@@ -186,7 +247,6 @@ JSON data, along with the appropriate HTTP status code:
 }
 ```
 
-
 ### First time set up
 
 1. Clone the code from GitHub using `git clone https://github.com/jwillie-26/Superheroes-API.git`
@@ -208,3 +268,8 @@ Migrate into the database and seed with provisioned fake data...
 ```sh
 rails db:migrate db:seed
 ```
+
+
+
+
+
