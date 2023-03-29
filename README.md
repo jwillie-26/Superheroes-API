@@ -17,15 +17,7 @@ Create the following relationships:
 - A `Power` has many `Hero`s through `HeroPower`
 - A `HeroPower` belongs to a `Hero` and belongs to a `Power`
 
-![](/assets/superheroes.png)
 
-
-## Deployment Link
-This link can be easily used to test the different routes/requests available to the API server. If you want to have the project in your development environment, proceed to set it up as outlined in the section that follows.
-
-```bash
-https://superheroes-api-apvb.onrender.com
-```
 
 ## Setup
 In order to use this repository, you need the following:
