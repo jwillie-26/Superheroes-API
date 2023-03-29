@@ -1,18 +1,20 @@
 class HerosController < ApplicationController
-    # rescue
-rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
+    # GET /heroes
     def index
         heroes = Hero.all
         render json: heroes, status: :ok
     end
-    def show 
+
+    # GET /heroes/:id
+    def show
         hero = Hero.find(params[:id])
-        render json: hero, serializer: HeroPowerSerializer
+        render json: hero, serializer: HeroPowerSerializer, status: :ok
     end
 
-    # private
     private
-    def render_not_found_response
-        render json: {error: "Hero not found"}, status: :not_found
+
+    def not_found_response
+        render json: { error: "Hero not found" }, status: 404
     end
 end
